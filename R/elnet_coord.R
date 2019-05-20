@@ -16,7 +16,7 @@ elnet_coord <- function() {
   n=20
   alpha=0
 
-  beta = c(2, 0, -2, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+  beta_0=matrix(c(2,0,-2,0,1,0,-1,c(rep(0,13))), ncol = 1)
 
   sigma = matrix (0, p, p)
 
