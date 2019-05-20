@@ -18,7 +18,7 @@
 #'
 #' @examples algo_leverage(rnorm(500), matrix(rnorm(1000),nrow=500), method='unif')
 #'
-algo_leverage <- function(y, X, r=0.1, sample_size = floor(r*length(y)), method='leverage') {
+algo_leverage <- function(y, X, r=0.1, sample_size = r, method='leverage') {
   n =length(y)
 
   unif_prob = rep(1, n)

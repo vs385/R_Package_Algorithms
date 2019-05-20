@@ -4,8 +4,7 @@
 \alias{algo_leverage}
 \title{algo_leverage function}
 \usage{
-algo_leverage(y, X, r = 0.1, sample_size = floor(r * length(y)),
-  method = "leverage")
+algo_leverage(y, X, r = 0.1, sample_size = r, method = "leverage")
 }
 \arguments{
 \item{y}{The response vector with n entries}
