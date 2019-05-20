@@ -84,7 +84,7 @@ elnet_coord <- function() {
 
   matplot(x = t(beta_c0_l1), y = t(beta_c0), type = "l", lty = 1,
           xlab = "L1 Norm", ylab = "coefficients", col = 1:20)
-  return (list(beta = beta_c0, X = X, Y = y))
+  return (list(beta = beta_c0, X = X, y = y))
 }
 
 
