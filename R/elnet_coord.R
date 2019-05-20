@@ -53,7 +53,7 @@ elnet_coord <- function() {
   }
 
   coord_des_step <- function(X, y, beta, j, lmbda) {
-    residual = (1/n) * t(as.matrix(X[, j])) %*% (Y - X[, -j] %*% beta[-j])
+    residual = (1/n) * t(as.matrix(X[, j])) %*% (y - X[, -j] %*% beta[-j])
     beta[j] = soft_threshold(res, lmbda*alpha) / (1 + lmbda - lmbda*alpha)
     return (beta)
 
