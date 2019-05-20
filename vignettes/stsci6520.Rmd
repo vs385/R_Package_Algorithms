@@ -55,7 +55,7 @@ The parameter `n_cores` is for the number of cores to be used in the parallel co
 
 Here is an example you can use for reference:
 
-```{r}
+```{r, eval=FALSE}
 D = diag(rep(10, 10))
 N = matrix(rnorm(100), ncol = 10)
 A = D + N
@@ -74,7 +74,7 @@ The idea is to subsample from the dataset using either of uniform-based probabil
 
 Here's an example:
 
-```{r}
+```{r, eval=FALSE}
 n = 400; p = 5; r = 20
 X = matrix(rnorm(n * p), nrow = n)
 true.beta = 3 * runif(p)
@@ -89,3 +89,8 @@ print(cbind(beta.unif, beta.lev))
 ## 3. Elastic net via coordinate descent algorithm
 
 This function just returns the output required to solve hw1 question 3, takes no arguments as parameters; for simulated dataset used, refer to the HW1Q3 instructions. 
+
+```{r, eval=FALSE}
+elnet_coord()
+```
+
