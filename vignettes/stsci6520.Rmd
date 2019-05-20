@@ -16,4 +16,76 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(stsci6520)
+
 ```
+
+## STSCI 6520 HW 2 Package (R)
+
+There are three functions in this R package *stsci6520*: ordinary least square solver `solve_ols`, leverage subsampling regressor `algo_leverage`, and elastic net coordinate descent algorithm `elnet_coord`. 
+It requires 'glmnet' and parallel computing.
+
+To download and install the package, use `devtools`:
+
+```{r install_devtool, results = 'hide', message=FALSE}
+library(devtools)
+install_github("vs385/stsci6520")
+```
+
+You can subsequently load the package with the usual R commands:
+
+```{r load, message=FALSE}
+library(stsci6520)
+```
+
+`stsci6520` has three functions:
+
+## 1. OLS Solver by iterative methods: Gauss-Seidel, Jacobi
+
+To solve $x$ for a linear system $Ax = b$, the function is used as follows:
+
+`solve_ols(A, b, n_cores = 2, method, n_iter = 100)`
+
+$A$ is required to be a square invertible matrix, and $b$ is a vector with the same dimension as the row space of A.
+
+Here `method` can be specified as `'GS'` or `'Jacobi'` indicating Gauss-Seidel methods or Jacobi methods respectively.
+
+Number of iterations has default 100, but can be modified in the parameters.
+
+The parameter `n_cores` is for the number of cores to be used in the parallel computing of Jacobi.
+
+Here is an example you can use for reference:
+
+```{r}
+D = diag(rep(10, 10))
+N = matrix(rnorm(100), ncol = 10)
+A = D + N
+b = runif(10)
+
+x_JC = solve_ols(A, b, method = 'Jacobi', n_iter = 1000)
+x_GS = solve_ols(A, b, method = 'GS', n_iter = 1000)
+print(cbind(x_JC, x_GS))
+```
+
+## 2. Leverage-score subsampling for OLS
+
+This function replicates the setting used in Ma et Al (2014), Figure 1. 
+
+The idea is to subsample from the dataset using either of uniform-based probability or leverage-score-based propbability subsampling (in this case, observations with higher leverage scores have higher probabilities of being subsampled and account more towards the regression). Computing the SVD of the design matrix, we can extract the leverage scores. 
+
+Here's an example:
+
+```{r}
+n = 400; p = 5; r = 20
+X = matrix(rnorm(n * p), nrow = n)
+true.beta = 3 * runif(p)
+y = X %*% true.beta + rnorm(n)
+  
+beta.unif = algo_leverage(y, X, sample_size = r, method = 'unif')
+beta.lev = algo_leverage(y, X, sample_size = r, method = 'leverage')
+print(cbind(beta.unif, beta.lev))
+```
+
+
+## 3. Elastic net via coordinate descent algorithm
+
+This function just returns the output required to solve hw1 question 3, takes no arguments as parameters; for simulated dataset used, refer to the HW1Q3 instructions. 
